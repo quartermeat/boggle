@@ -106,7 +106,7 @@ func printBoard(board [4][4]string) {
 
 func isWordAvailable(board [4][4]string, word string) bool {
 	//pick up all the words on the board
-
+	return true
 }
 
 func runBoggle(board [4][4]string, txtlines []string) bool {
