@@ -8,6 +8,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/inancgumus/screen"
 )
 
 func main() {
@@ -53,22 +55,22 @@ func getBoard() [4][4]string {
 	//taken from: https://boardgames.stackexchange.com/questions/29264/boggle-what-is-the-dice-configuration-for-boggle-in-various-languages
 	availableDice := [][]string{
 		// get letters
-		{"I ", "F ", "E ", "H ", "E ", "Y "},
-		{"R ", "I ", "F ", "O ", "B ", "X "},
-		{"U ", "T ", "O ", "K ", "N ", "D "},
-		{"D ", "E ", "N ", "O ", "W ", "S "},
-		{"H ", "M ", "S ", "R ", "A ", "O "},
-		{"L ", "U ", "P ", "E ", "T ", "S "},
-		{"Y ", "L ", "G ", "K ", "U ", "E "},
-		{"QU", "B ", "M ", "J ", "O ", "A "},
-		{"E ", "H ", "I ", "S ", "P ", "N "},
-		{"V ", "E ", "T ", "I ", "G ", "N "},
-		{"B ", "A ", "L ", "I ", "Y ", "T "},
-		{"E ", "Z ", "A ", "V ", "N ", "D "},
-		{"R ", "A ", "L ", "E ", "S ", "C "},
-		{"U ", "W ", "I ", "L ", "R ", "G "},
-		{"P ", "A ", "C ", "E ", "M ", "D "},
-		{"A ", "C ", "I ", "T ", "O ", "A "},
+		{"I  ", "F  ", "E  ", "H  ", "E  ", "Y  "},
+		{"R  ", "I  ", "F  ", "O  ", "B  ", "X  "},
+		{"U  ", "T  ", "O  ", "K  ", "N  ", "D  "},
+		{"D  ", "E  ", "N  ", "O  ", "W  ", "S  "},
+		{"H  ", "M  ", "S  ", "R  ", "A  ", "O  "},
+		{"L  ", "U  ", "P  ", "E  ", "T  ", "S  "},
+		{"Y  ", "L  ", "G  ", "K  ", "U  ", "E  "},
+		{"QU ", "B  ", "M  ", "J  ", "O  ", "A  "},
+		{"E  ", "H  ", "I  ", "S  ", "P  ", "N  "},
+		{"V  ", "E  ", "T  ", "I  ", "G  ", "N  "},
+		{"B  ", "A  ", "L  ", "I  ", "Y  ", "T  "},
+		{"E  ", "Z  ", "A  ", "V  ", "N  ", "D  "},
+		{"R  ", "A  ", "L  ", "E  ", "S  ", "C  "},
+		{"U  ", "W  ", "I  ", "L  ", "R  ", "G  "},
+		{"P  ", "A  ", "C  ", "E  ", "M  ", "D  "},
+		{"A  ", "C  ", "I  ", "T  ", "O  ", "A  "},
 	}
 	rand.Seed(time.Now().UnixNano())
 	rand.Shuffle(len(availableDice), func(i, j int) { availableDice[i], availableDice[j] = availableDice[j], availableDice[i] })
@@ -102,22 +104,29 @@ func printBoard(board [4][4]string) {
 	}
 }
 
+func isWordAvailable(board [4][4]string, word string) bool {
+	//pick up all the words on the board
+
+}
+
 func runBoggle(board [4][4]string, txtlines []string) bool {
 
 	var input string
-
+	screen.Clear()
 	printBoard(board)
 
-	fmt.Println("Enter word to check:")
+	fmt.Print("Enter word to check: ")
 	fmt.Scanln(&input)
 
-	if listContains(input, txtlines) {
-		fmt.Println("Got it! ＼(＾O＾)／")
-	} else {
-		fmt.Println("Not in the list ¯\\_(ツ)_/¯")
+	if !isWordAvailable(board, input) {
+		return false
 	}
 
-	fmt.Println("again, y/n?")
-	fmt.Scanln(&input)
-	return input[0] == 'y'
+	if listContains(input, txtlines) {
+		fmt.Println("	yes")
+	} else {
+		fmt.Println("	no")
+	}
+
+	return input != "q"
 }
